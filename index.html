@@ -69,6 +69,7 @@ main{max-width:1200px;margin:0 auto;padding:12px 16px 60px}
 .card{background:var(--card);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(214,177,97,.08);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;text-align:left;color:inherit;font-family:inherit;padding:0}
 .card .ph{aspect-ratio:1;background:#fff;position:relative}
 .card img{width:100%;height:100%;object-fit:contain;display:block}
+.tag.novo{background:#e8e2d4;color:#141210}
 .tag{position:absolute;top:8px;left:8px;background:var(--gold);letter-spacing:.04em;color:var(--acc-ink);font-size:10px;font-weight:700;padding:3px 7px;border-radius:6px;text-transform:uppercase}
 .card .nm{margin:9px 10px 6px;max-height:3.9em;font-size:13px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .card .sz{padding:2px 10px 10px;margin-top:auto;display:flex;gap:4px;flex-wrap:wrap}
@@ -159,7 +160,9 @@ footer a{color:var(--acc)}
 const WHATSAPP = "5575981455157";
 const INSTAGRAM = "_nerysports_";
 
-const TEMP = ["Todas","26/27","Copa 2026","25/26","24/25","Retrô","Anteriores"];
+let TEMP = ["Todas","26/27","Copa 2026","25/26","24/25","Retrô","Anteriores"];
+let REF = new Date();
+const isNew = p => p.desde && (REF - new Date(p.desde+"T12:00:00"))/864e5 <= 7;
 const VER = ["Todas","Torcedor","Jogador","Feminina","Infantil","Manga longa","Regata"];
 const SIZES = ["P","M","G","GG","2XL","3XL","4XL"];
 const st = {q:"",temp:"Todas",ver:"Todas",size:null};
@@ -178,12 +181,13 @@ function renderChips(){chips($("cTemp"),TEMP,"temp","Temporada");chips($("cVer")
 
 function match(p){
   if(st.q){const words=norm(st.q).split(/\s+/).filter(Boolean);const n=norm(p.nome);if(!words.every(w=>n.includes(w)))return false}
+  if(st.temp==="Novidades"){ if(!isNew(p)) return false } else
   if(st.temp!=="Todas"){ if(st.temp==="Anteriores"){ if(p.temporada.length)return false } else if(!p.temporada.includes(st.temp))return false }
   if(st.ver!=="Todas" && !p.versao.includes(st.ver))return false;
   if(st.size && !p.tamanhos.includes(st.size))return false;
   return true;
 }
-function badge(p){return p.temporada.includes("26/27")?"Lançamento":p.temporada.includes("Copa 2026")?"Copa 2026":p.temporada.includes("Retrô")?"Retrô":""}
+function badge(p){return isNew(p)?"Novidade":p.temporada.includes("26/27")?"Lançamento":p.temporada.includes("Copa 2026")?"Copa 2026":p.temporada.includes("Retrô")?"Retrô":""}
 function shortSizes(p){return p.tamanhos.map(s=>s.replace(/\s*\(.*\)/,"")).slice(0,7)}
 
 const LIGAS = [
@@ -334,7 +338,7 @@ function render(){
   const shown = PER? list.slice((PAGE-1)*PER, PAGE*PER) : list;
   $("count").textContent = `${list.length} camisa${list.length===1?"":"s"} disponíve${list.length===1?"l":"is"}` + (PER&&tot>1?` · página ${PAGE} de ${tot}`:"");
   $("empty").hidden = list.length>0;
-  $("grid").innerHTML = shown.map(p=>{const b=badge(p);return `<button class="card" data-id="${p.id}"><div class="ph"><img loading="lazy" decoding="async" src="${p.fotos[0]}" alt="${esc(p.nome)}">${p.fotos.length>1?`<span class="nfo">${p.fotos.length} fotos</span>`:""}${b?`<span class="tag">${b}</span>`:""}</div><div class="nm">${esc(p.nome)}</div><div class="sz">${shortSizes(p).map(s=>`<i>${esc(s)}</i>`).join("")}</div></button>`}).join("");
+  $("grid").innerHTML = shown.map(p=>{const b=badge(p);return `<button class="card" data-id="${p.id}"><div class="ph"><img loading="lazy" decoding="async" src="${p.fotos[0]}" alt="${esc(p.nome)}">${p.fotos.length>1?`<span class="nfo">${p.fotos.length} fotos</span>`:""}${b?`<span class="tag${b==="Novidade"?" novo":""}">${b==="Novidade"?"★ Novidade":b}</span>`:""}</div><div class="nm">${esc(p.nome)}</div><div class="sz">${shortSizes(p).map(s=>`<i>${esc(s)}</i>`).join("")}</div></button>`}).join("");
   const pg=$("pager");
   if(!PER||tot<=1){pg.innerHTML="";return}
   pg.innerHTML = `<button data-p="${PAGE-1}" ${PAGE===1?"disabled":""} aria-label="Página anterior">‹</button>` +
@@ -375,7 +379,9 @@ async function copy(t,quiet){try{await navigator.clipboard.writeText(t);toast(qu
 function toast(t){const el=$("toast");el.textContent=t;el.style.display="block";clearTimeout(el._t);el._t=setTimeout(()=>el.style.display="none",2200)}
 
 fetch("data.json",{cache:"no-cache"}).then(r=>r.json()).then(d=>{
-  ALL = d.produtos; $("nP").textContent = ALL.length+" camisas";
+  REF = new Date(d.atualizado); ALL = d.produtos.map((p,i)=>(p._i=i,p)).sort((a,b)=>(isNew(b)-isNew(a))||a._i-b._i);
+  const nn = ALL.filter(isNew).length; if(nn){ TEMP = ["Todas","Novidades",...TEMP.slice(1)]; }
+  $("nP").textContent = ALL.length+" camisas";
   const dt=new Date(d.atualizado);
   $("upd").textContent = "atualizado em "+dt.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric"});
   renderChips(); route();
