@@ -113,6 +113,9 @@ footer a{color:var(--acc)}
 .tabs a.on{background:var(--gold);color:var(--acc-ink);border-color:#c9a24a}.tabs a.on small{color:#3a2f18}
 .encnote{border:1px solid #3a3226;background:linear-gradient(135deg,rgba(214,177,97,.16),transparent 70%);border-radius:14px;padding:12px 14px;margin:10px 0 4px;font-size:13px;line-height:1.45}
 .encnote b{color:var(--acc)}
+.encnote .lnk{color:var(--acc);font-weight:600}
+.encnote.outro{margin-top:22px}.encnote.outro b{display:block;font-size:15px;margin-bottom:4px}
+.encnote.outro .btn{margin-top:12px}
 .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 @media(min-width:640px){.pgrid{grid-template-columns:repeat(5,1fr);gap:8px}}
 .pgrid button{padding:0;border:0;background:#fff;aspect-ratio:1;border-radius:10px;overflow:hidden;cursor:pointer;position:relative}
@@ -255,7 +258,9 @@ function encCrumbs(){
   h += ENCV.time ? `<a href="#enc-liga-${slug(k)}">${esc(ligaNome(k))}</a> <span>/</span> <b>${esc(ENCV.time.nome)}</b>` : `<b>${esc(ligaNome(k))}</b>`;
   return h+`</nav>`;
 }
-const NOTE=`<div class="encnote"><b>Sob encomenda · chega em ~30 dias.</b> Escolha a liga e o time, toque na foto da camisa que você quer e encomende pelo WhatsApp.</div>`;
+const OUTRO_MSG="Olá! Não encontrei no catálogo o modelo que eu quero. Vou te enviar a foto para vocês providenciarem.";
+const OUTRO=()=>`<div class="encnote outro"><b>Não achou o modelo que procura?</b> Temos muitas outras opções além das que estão aqui. Pegue a foto da camisa (print, foto da internet ou de alguém usando), mande para a gente e nós providenciamos.<a class="btn p" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(OUTRO_MSG)}" target="_blank" rel="noopener">Enviar foto do modelo no WhatsApp</a></div>`;
+const NOTE=`<div class="encnote"><b>Sob encomenda · chega em ~30 dias.</b> Escolha a liga e o time, toque na foto da camisa que você quer e encomende pelo WhatsApp. <a href="#" class="lnk" onclick="document.querySelector('.encnote.outro')?.scrollIntoView({behavior:'smooth',block:'center'});return false">Não achou? Envie a foto do modelo.</a></div>`;
 function teamTiles(list){return `<div class="tiles times">${list.map(t=>`<a class="tile team" href="#enc-${t.slug}"><div class="tph"><img loading="lazy" src="${img(t.capa,"w300-h300-c-rj-l70")}" alt=""></div><div class="tt"><b>${esc(t.nome)}</b><span>${t.n} fotos</span></div></a>`).join("")}</div>`}
 async function encRoute(h){
   window.scrollTo(0,0);
@@ -268,14 +273,14 @@ async function encRoute(h){
   if(ENCV.time){ v.innerHTML=encCrumbs()+`<h2 class="sec">${esc(ENCV.time.nome)}</h2><p class="count">Carregando fotos…</p>`;
     ENCF = await fetch(`enc/${ENCV.time.slug}.json`).then(r=>r.json()).catch(()=>[]); renderEncFotos(); return; }
   if(ENCV.liga){ const ts=ENC.filter(t=>t.liga===ENCV.liga).sort((a,b)=>b.n-a.n);
-    v.innerHTML=encCrumbs()+`<h2 class="sec">${ENCV.liga==="Seleções"?"Escolha a seleção":ENCV.liga==="Coleções"?"Escolha a coleção":"Escolha o time"}</h2>`+teamTiles(ts); return; }
+    v.innerHTML=encCrumbs()+`<h2 class="sec">${ENCV.liga==="Seleções"?"Escolha a seleção":ENCV.liga==="Coleções"?"Escolha a coleção":"Escolha o time"}</h2>`+teamTiles(ts)+OUTRO(); return; }
   v.innerHTML=NOTE+`<h2 class="sec">Escolha a liga</h2><div class="tiles ligas">`+ENC_LIGAS.map(([k,nm,sub])=>{const ts=ENC.filter(t=>t.liga===k); if(!ts.length) return "";
-    const n=ts.reduce((a,t)=>a+t.n,0); return `<a class="tile liga" href="#enc-liga-${slug(k)}"><span class="flag">${EFLAG[k]||""}</span><b>${esc(nm)}</b><small>${esc(sub)}</small><span>${ts.length} ${k==="Coleções"?"coleções":k==="Seleções"?"seleções":"times"} · ${n.toLocaleString("pt-BR")} fotos</span></a>`}).join("")+`</div>`;
+    const n=ts.reduce((a,t)=>a+t.n,0); return `<a class="tile liga" href="#enc-liga-${slug(k)}"><span class="flag">${EFLAG[k]||""}</span><b>${esc(nm)}</b><small>${esc(sub)}</small><span>${ts.length} ${k==="Coleções"?"coleções":k==="Seleções"?"seleções":"times"} · ${n.toLocaleString("pt-BR")} fotos</span></a>`}).join("")+`</div>`+OUTRO();
 }
 function encSearch(){
   if(MODE!=="enc"||!ENC) return; if(!st.q){ encRoute(decodeURIComponent(location.hash.slice(1))); return; }
   const w=norm(st.q).split(/\s+/).filter(Boolean); const ts=ENC.filter(t=>w.every(x=>norm(t.nome+" "+ligaNome(t.liga)).includes(x))).sort((a,b)=>b.n-a.n);
-  $("encView").innerHTML=NOTE+`<h2 class="sec">Resultados</h2>`+(ts.length?teamTiles(ts):`<p class="empty">Nenhum time encontrado.</p>`);
+  $("encView").innerHTML=NOTE+`<h2 class="sec">Resultados</h2>`+(ts.length?teamTiles(ts):`<p class="empty">Nenhum time encontrado no catálogo — mas a gente consegue! Veja abaixo.</p>`)+OUTRO();
 }
 function renderEncFotos(){
   const per=PER||ENCF.length, tot=Math.max(1,Math.ceil(ENCF.length/per)); if(EPAGE>tot)EPAGE=tot;
@@ -283,6 +288,7 @@ function renderEncFotos(){
   let h=encCrumbs()+`<h2 class="sec">${esc(ENCV.time.nome)}</h2><div class="countbar"><p class="count">${ENCF.length} fotos${tot>1?` · página ${EPAGE} de ${tot}`:""}</p><label class="per">Mostrar <select id="eper"><option value="12">12</option><option value="24">24</option><option value="48">48</option><option value="0">Todas</option></select> por página</label></div>`;
   h+=`<div class="pgrid" id="pgrid">${shown.map((u,i)=>`<button data-i="${ini+i}"><img loading="lazy" decoding="async" src="${img(u,"w360-h360-c-rj-l70")}" alt=""><span>${ini+i+1}</span></button>`).join("")}</div>`;
   if(tot>1) h+=`<nav class="pager" id="epager"><button data-p="${EPAGE-1}" ${EPAGE===1?"disabled":""}>‹</button>${pages(EPAGE,tot).map(n=>n==="…"?`<span>…</span>`:`<button data-p="${n}" class="${n===EPAGE?"on":""}">${n}</button>`).join("")}<button data-p="${EPAGE+1}" ${EPAGE===tot?"disabled":""}>›</button></nav>`;
+  h+=OUTRO();
   $("encView").innerHTML=h; $("eper").value=String(PER);
   $("eper").onchange=e=>{PER=+e.target.value;try{localStorage.setItem("ns_per",PER)}catch(_){} $("per").value=String(PER); EPAGE=1; renderEncFotos(); encTop()};
   $("pgrid").onclick=e=>{const b=e.target.closest("button[data-i]"); if(b) openFoto(+b.dataset.i)};
