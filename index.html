@@ -37,7 +37,15 @@ header{padding:22px 16px 10px;max-width:1200px;margin:0 auto}
 .chip.size{min-width:40px}
 .lbl{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-right:2px;align-self:center;flex:none}
 main{max-width:1200px;margin:0 auto;padding:12px 16px 60px}
-.count{color:var(--mut);font-size:13px;margin:2px 0 12px}
+.count{color:var(--mut);font-size:13px;margin:0}
+.countbar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 12px}
+.per{font-size:12px;color:var(--mut);display:flex;align-items:center;gap:6px}
+.per select{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:5px 8px;font:inherit;font-size:13px;font-weight:600}
+.pager{display:flex;justify-content:center;align-items:center;gap:6px;margin:22px 0 4px;flex-wrap:wrap}
+.pager button{min-width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.pager button.on{background:var(--gold);color:var(--acc-ink);border-color:#c9a24a}
+.pager button:disabled{opacity:.35;cursor:default}
+.pager span{color:var(--mut);padding:0 2px}
 .sec{font-family:Montserrat,sans-serif;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 10px}
 .crumbs{font-size:13px;color:var(--mut);margin:6px 0 2px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .crumbs a{color:var(--acc);text-decoration:none;font-weight:600}.crumbs b{color:var(--text)}
@@ -114,8 +122,9 @@ footer a{color:var(--acc)}
   <nav class="crumbs" id="crumbs" hidden></nav>
   <section id="secTiles"><h2 class="sec" id="tilesTitle">Escolha a liga</h2><div class="tiles" id="tiles"></div></section>
   <h2 class="sec" id="gridTitle">Todas as camisas</h2>
-  <p class="count" id="count"></p>
+  <div class="countbar"><p class="count" id="count"></p><label class="per">Mostrar <select id="per"><option value="12">12</option><option value="24">24</option><option value="48">48</option><option value="0">Todas</option></select> por página</label></div>
   <div class="grid" id="grid"></div>
+  <nav class="pager" id="pager"></nav>
   <p class="empty" id="empty" hidden>Nenhuma camisa encontrada com esses filtros.</p>
 </main>
 <footer>Fotos meramente ilustrativas · Disponibilidade sujeita a confirmação<br>Pedidos pelo WhatsApp <a href="https://wa.me/557581455157">(75) 8145-5157</a> · Instagram <a href="https://www.instagram.com/_nerysports_/">@_nerysports_</a></footer>
@@ -141,7 +150,7 @@ const esc = s => s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':
 function chips(el,list,key,label){
   el.innerHTML = `<span class="lbl">${label}</span>` + list.map(v=>`<button class="chip ${key==='size'?'size':''} ${(st[key]===v||(key==='size'&&st.size===null&&v==='Todos'))?'on':''}" data-v="${esc(v)}">${esc(v)}</button>`).join("");
   el.onclick = e=>{const b=e.target.closest(".chip");if(!b)return;const v=b.dataset.v;
-    if(key==='size') st.size = v==='Todos'?null:v; else st[key]=v; renderChips(); render();};
+    if(key==='size') st.size = v==='Todos'?null:v; else st[key]=v; PAGE=1; renderChips(); render();};
 }
 function renderChips(){chips($("cTemp"),TEMP,"temp","Temporada");chips($("cVer"),VER,"ver","Versão");chips($("cSize"),["Todos",...SIZES],"size","Tamanho");}
 
@@ -178,7 +187,7 @@ function route(){
   VIEW = {liga:null,time:null};
   if(h.startsWith("time-")){const p=ALL.find(p=>slug(p.time)===h.slice(5)); if(p) VIEW={liga:p.liga,time:p.time};}
   else if(h.startsWith("liga-")){const l=LIGAS.find(l=>slug(l[0])===h.slice(5)); if(l) VIEW={liga:l[0],time:null};}
-  renderView(); render(); window.scrollTo(0,0);
+  PAGE=1; renderView(); render(); window.scrollTo(0,0);
 }
 function inScope(p){ if(VIEW.time) return p.time===VIEW.time && p.liga===VIEW.liga; if(VIEW.liga) return p.liga===VIEW.liga; return true }
 function teamTile(t,ps){const f=ps[0].fotos[0];return `<a class="tile team" href="#time-${slug(t)}"><div class="tph"><img loading="lazy" src="${f}" alt=""></div><div class="tt"><b>${esc(t)}</b><span>${ps.length} camisa${ps.length>1?"s":""}</span></div></a>`}
@@ -207,14 +216,31 @@ function renderView(){
 }
 window.addEventListener("hashchange",route);
 $("home").addEventListener("click",e=>{ if(!location.hash||location.hash==="#"){e.preventDefault();window.scrollTo({top:0,behavior:"smooth"})} });
+let PAGE=1, PER=24;
+try{const v=localStorage.getItem("ns_per"); if(v!==null) PER=+v}catch(e){}
+$("per").value=String(PER);
+$("per").onchange=e=>{PER=+e.target.value; try{localStorage.setItem("ns_per",PER)}catch(_){} PAGE=1; render(); toGrid()};
+function toGrid(){const y=$("gridTitle").getBoundingClientRect().top+window.scrollY-($(".bar")?.offsetHeight||0)-8; window.scrollTo({top:Math.max(0,y),behavior:"smooth"})}
+function pages(cur,tot){const out=[];const add=n=>out.push(n);
+  if(tot<=7){for(let i=1;i<=tot;i++)add(i);return out}
+  add(1); if(cur>3)add("…"); for(let i=Math.max(2,cur-1);i<=Math.min(tot-1,cur+1);i++)add(i); if(cur<tot-2)add("…"); add(tot); return out}
 function render(){
   const list = ALL.filter(p=>inScope(p)&&match(p));
-  $("count").textContent = `${list.length} camisa${list.length===1?"":"s"} disponíve${list.length===1?"l":"is"}`;
+  const tot = PER? Math.max(1,Math.ceil(list.length/PER)) : 1;
+  if(PAGE>tot) PAGE=tot;
+  const shown = PER? list.slice((PAGE-1)*PER, PAGE*PER) : list;
+  $("count").textContent = `${list.length} camisa${list.length===1?"":"s"} disponíve${list.length===1?"l":"is"}` + (PER&&tot>1?` · página ${PAGE} de ${tot}`:"");
   $("empty").hidden = list.length>0;
-  $("grid").innerHTML = list.map(p=>{const b=badge(p);return `<button class="card" data-id="${p.id}"><div class="ph"><img loading="lazy" decoding="async" src="${p.fotos[0]}" alt="${esc(p.nome)}">${p.fotos.length>1?`<span class="nfo">${p.fotos.length} fotos</span>`:""}${b?`<span class="tag">${b}</span>`:""}</div><div class="nm">${esc(p.nome)}</div><div class="sz">${shortSizes(p).map(s=>`<i>${esc(s)}</i>`).join("")}</div></button>`}).join("");
+  $("grid").innerHTML = shown.map(p=>{const b=badge(p);return `<button class="card" data-id="${p.id}"><div class="ph"><img loading="lazy" decoding="async" src="${p.fotos[0]}" alt="${esc(p.nome)}">${p.fotos.length>1?`<span class="nfo">${p.fotos.length} fotos</span>`:""}${b?`<span class="tag">${b}</span>`:""}</div><div class="nm">${esc(p.nome)}</div><div class="sz">${shortSizes(p).map(s=>`<i>${esc(s)}</i>`).join("")}</div></button>`}).join("");
+  const pg=$("pager");
+  if(!PER||tot<=1){pg.innerHTML="";return}
+  pg.innerHTML = `<button data-p="${PAGE-1}" ${PAGE===1?"disabled":""} aria-label="Página anterior">‹</button>` +
+    pages(PAGE,tot).map(n=>n==="…"?`<span>…</span>`:`<button data-p="${n}" class="${n===PAGE?"on":""}">${n}</button>`).join("") +
+    `<button data-p="${PAGE+1}" ${PAGE===tot?"disabled":""} aria-label="Próxima página">›</button>`;
 }
+$("pager").onclick=e=>{const b=e.target.closest("button[data-p]");if(!b||b.disabled)return;PAGE=+b.dataset.p;render();toGrid()};
 $("grid").onclick = e=>{const c=e.target.closest(".card");if(c)openP(c.dataset.id)};
-let tq;$("q").oninput = e=>{clearTimeout(tq);tq=setTimeout(()=>{st.q=e.target.value.trim();render()},120)};
+let tq;$("q").oninput = e=>{clearTimeout(tq);tq=setTimeout(()=>{st.q=e.target.value.trim();PAGE=1;render()},120)};
 
 let cur=null, curSize=null;
 function openP(id){
