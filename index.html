@@ -263,7 +263,8 @@ async function encRoute(h){
   ENCV={liga:null,time:null}; EPAGE=1;
   if(h.startsWith("enc-liga-")){ const l=ENC_LIGAS.find(l=>slug(l[0])===h.slice(9)); if(l) ENCV.liga=l[0]; }
   else if(h.startsWith("enc-")){ const t=ENC.find(t=>t.slug===h.slice(4)); if(t){ENCV={liga:t.liga,time:t};} }
-  if(st.q){ encSearch(); return; }
+  if(ENCV.time||ENCV.liga){ if(st.q){ st.q=""; $("q").value=""; } }
+  else if(st.q){ encSearch(); return; }
   if(ENCV.time){ v.innerHTML=encCrumbs()+`<h2 class="sec">${esc(ENCV.time.nome)}</h2><p class="count">Carregando fotos…</p>`;
     ENCF = await fetch(`enc/${ENCV.time.slug}.json`).then(r=>r.json()).catch(()=>[]); renderEncFotos(); return; }
   if(ENCV.liga){ const ts=ENC.filter(t=>t.liga===ENCV.liga).sort((a,b)=>b.n-a.n);
