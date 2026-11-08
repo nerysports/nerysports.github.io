@@ -307,6 +307,10 @@ function openFoto(i){
 document.addEventListener("keydown",e=>{ if(MODE!=="enc"||!$("modal").classList.contains("open")||!ENCF.length) return;
   if(e.key==="ArrowRight") openFoto((FI+1)%ENCF.length); if(e.key==="ArrowLeft") openFoto((FI-1+ENCF.length)%ENCF.length); });
 
+
+// clique num link que aponta para a mesma página atual (ex.: buscou e tocou no time que já estava aberto)
+document.addEventListener("click",e=>{const a=e.target.closest('a[href^="#"]'); if(!a) return;
+  const h=a.getAttribute("href"); if(h===location.hash || (h==="#" && !location.hash)){ e.preventDefault(); st.q=""; $("q").value=""; route(); }});
 window.addEventListener("hashchange",route);
 $("home").addEventListener("click",e=>{ if(!location.hash||location.hash==="#"){e.preventDefault();window.scrollTo({top:0,behavior:"smooth"})} });
 let PAGE=1, PER=24;
