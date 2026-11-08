@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Catálogo Nery Sports — Camisas de Time</title>
+<title>Nery Sports — Catálogo de Camisas de Time</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="description" content="Camisas de time, seleções e retrô com pronta entrega. Peça pelo WhatsApp.">
+<meta property="og:title" content="Nery Sports — Catálogo de Camisas">
+<meta property="og:description" content="Camisas de time, seleções e retrô. Escolha a sua e peça pelo WhatsApp.">
+<meta property="og:image" content="https://nerysports.github.io/icon-512.png">
+<meta property="og:url" content="https://nerysports.github.io/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -28,13 +37,27 @@ header{padding:22px 16px 10px;max-width:1200px;margin:0 auto}
 .chip.size{min-width:40px}
 .lbl{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-right:2px;align-self:center;flex:none}
 main{max-width:1200px;margin:0 auto;padding:12px 16px 60px}
-.count{color:var(--mut);font-size:13px;margin:6px 0 12px}
+.count{color:var(--mut);font-size:13px;margin:2px 0 12px}
+.sec{font-family:Montserrat,sans-serif;font-weight:800;font-size:15px;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 10px}
+.crumbs{font-size:13px;color:var(--mut);margin:6px 0 2px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.crumbs a{color:var(--acc);text-decoration:none;font-weight:600}.crumbs b{color:var(--text)}
+.tiles{display:grid;gap:10px;margin-bottom:8px}
+.tiles.ligas{grid-template-columns:repeat(2,1fr)}
+.tiles.times{grid-template-columns:repeat(3,1fr)}
+@media(min-width:640px){.tiles.ligas{grid-template-columns:repeat(3,1fr)}.tiles.times{grid-template-columns:repeat(5,1fr)}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--text);display:flex;flex-direction:column;overflow:hidden}
+.tile.liga{padding:14px;gap:3px;background-image:linear-gradient(135deg,rgba(214,177,97,.14),transparent 60%);border-color:#3a3226}
+.tile.liga b{font-family:Montserrat,sans-serif;font-weight:800;font-size:16px}
+.tile.liga small{color:var(--mut);font-size:11.5px;line-height:1.3}
+.tile.liga span{margin-top:6px;font-size:11px;font-weight:600;color:var(--acc)}
+.tile.team .tph{aspect-ratio:1;background:#fff}.tile.team img{width:100%;height:100%;object-fit:cover;display:block}
+.tile.team .tt{padding:7px 8px 9px;display:flex;flex-direction:column;gap:1px}
+.tile.team b{font-size:12.5px;line-height:1.2}.tile.team span{font-size:10.5px;color:var(--acc);font-weight:600}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 @media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:14px}}
 @media(min-width:960px){.grid{grid-template-columns:repeat(4,1fr)}}
 .card{background:var(--card);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(214,177,97,.08);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;text-align:left;color:inherit;font-family:inherit;padding:0}
 .card .ph{aspect-ratio:1;background:#fff;position:relative}
-.card img:not([src]){visibility:hidden}
 .card img{width:100%;height:100%;object-fit:contain;display:block}
 .tag{position:absolute;top:8px;left:8px;background:var(--gold);letter-spacing:.04em;color:var(--acc-ink);font-size:10px;font-weight:700;padding:3px 7px;border-radius:6px;text-transform:uppercase}
 .card .nm{margin:9px 10px 6px;max-height:3.9em;font-size:13px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -49,7 +72,15 @@ footer a{color:var(--acc)}
 .sheet{background:var(--card);width:100%;max-width:520px;border-radius:18px 18px 0 0;max-height:94vh;overflow:auto}
 @media(min-width:640px){.sheet{border-radius:18px}}
 .sheet .big{background:#fff;aspect-ratio:1;position:relative}
-.sheet .big img{width:100%;height:100%;object-fit:contain}
+.track{display:flex;width:100%;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.track::-webkit-scrollbar{display:none}
+.track img{flex:0 0 100%;width:100%;height:100%;object-fit:contain;scroll-snap-align:center}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:26px;line-height:1;cursor:pointer}
+.nav.prev{left:8px}.nav.next{right:8px}
+.dots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(0,0,0,.25);box-shadow:0 0 0 1px rgba(255,255,255,.6)}
+.dots i.on{background:#d6b161;width:18px;border-radius:4px}
+.nfo{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px}
 .x{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:20px;cursor:pointer}
 .sheet .bd{padding:16px}
 .sheet h2{font-size:18px;line-height:1.3}
@@ -78,6 +109,9 @@ footer a{color:var(--acc)}
   <div class="chips" id="cSize"></div>
 </div></div>
 <main>
+  <nav class="crumbs" id="crumbs" hidden></nav>
+  <section id="secTiles"><h2 class="sec" id="tilesTitle">Escolha a liga</h2><div class="tiles" id="tiles"></div></section>
+  <h2 class="sec" id="gridTitle">Todas as camisas</h2>
   <p class="count" id="count"></p>
   <div class="grid" id="grid"></div>
   <p class="empty" id="empty" hidden>Nenhuma camisa encontrada com esses filtros.</p>
@@ -119,24 +153,53 @@ function match(p){
 function badge(p){return p.temporada.includes("26/27")?"Lançamento":p.temporada.includes("Copa 2026")?"Copa 2026":p.temporada.includes("Retrô")?"Retrô":""}
 function shortSizes(p){return p.tamanhos.map(s=>s.replace(/\s*\(.*\)/,"")).slice(0,7)}
 
+const LIGAS = [
+  ["Brasil","Brasileirão","Times brasileiros"],["Seleções","Seleções","Copa do Mundo e seleções"],
+  ["Inglaterra","Premier League","Inglaterra"],["Espanha","La Liga","Espanha"],["Itália","Serie A","Itália"],
+  ["Alemanha","Bundesliga","Alemanha"],["França","Ligue 1","França"],["Portugal","Liga Portugal","Portugal"],
+  ["Resto do mundo","Outras ligas","Arábia, MLS, Holanda, México…"]];
+const slug = s => norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+const ligaInfo = k => LIGAS.find(l=>l[0]===k) || [k,k,""];
+let VIEW = {liga:null,time:null};
+function route(){
+  const h = decodeURIComponent(location.hash.slice(1));
+  VIEW = {liga:null,time:null};
+  if(h.startsWith("time-")){const p=ALL.find(p=>slug(p.time)===h.slice(5)); if(p) VIEW={liga:p.liga,time:p.time};}
+  else if(h.startsWith("liga-")){const l=LIGAS.find(l=>slug(l[0])===h.slice(5)); if(l) VIEW={liga:l[0],time:null};}
+  renderView(); render(); window.scrollTo(0,0);
+}
+function inScope(p){ if(VIEW.time) return p.time===VIEW.time && p.liga===VIEW.liga; if(VIEW.liga) return p.liga===VIEW.liga; return true }
+function teamTile(t,ps){const f=ps[0].fotos[0];return `<a class="tile team" href="#time-${slug(t)}"><div class="tph"><img loading="lazy" src="${f}" alt=""></div><div class="tt"><b>${esc(t)}</b><span>${ps.length} camisa${ps.length>1?"s":""}</span></div></a>`}
+function renderView(){
+  const cr=$("crumbs"), tl=$("tiles");
+  if(!VIEW.liga){
+    cr.hidden=true; $("tilesTitle").textContent="Escolha a liga"; $("secTiles").hidden=false;
+    tl.className="tiles ligas";
+    tl.innerHTML = LIGAS.map(([k,nm,sub])=>{const ps=ALL.filter(p=>p.liga===k); if(!ps.length)return "";
+      const ts=[...new Set(ps.map(p=>p.time))];
+      return `<a class="tile liga" href="#liga-${slug(k)}"><b>${esc(nm)}</b><small>${esc(sub)}</small><span>${ts.length} time${ts.length>1?"s":""} · ${ps.length} camisas</span></a>`}).join("");
+    $("gridTitle").textContent="Todas as camisas";
+  } else {
+    const [k,nm]=ligaInfo(VIEW.liga);
+    cr.hidden=false;
+    cr.innerHTML = `<a href="#">‹ Início</a>` + (VIEW.time?` <span>/</span> <a href="#liga-${slug(k)}">${esc(nm)}</a> <span>/</span> <b>${esc(VIEW.time)}</b>`:` <span>/</span> <b>${esc(nm)}</b>`);
+    if(VIEW.time){ $("secTiles").hidden=true; $("gridTitle").textContent=VIEW.time; }
+    else {
+      $("secTiles").hidden=false; $("tilesTitle").textContent = k==="Seleções"?"Escolha a seleção":"Escolha o time";
+      tl.className="tiles times";
+      const by={}; ALL.filter(p=>p.liga===k).forEach(p=>(by[p.time]=by[p.time]||[]).push(p));
+      tl.innerHTML = Object.keys(by).sort((a,b)=>by[b].length-by[a].length||a.localeCompare(b)).map(t=>teamTile(t,by[t])).join("");
+      $("gridTitle").textContent="Todas as camisas · "+nm;
+    }
+  }
+}
+window.addEventListener("hashchange",route);
 function render(){
-  const list = ALL.filter(match);
+  const list = ALL.filter(p=>inScope(p)&&match(p));
   $("count").textContent = `${list.length} camisa${list.length===1?"":"s"} disponíve${list.length===1?"l":"is"}`;
   $("empty").hidden = list.length>0;
-  $("grid").innerHTML = list.map(p=>{const b=badge(p);return `<button class="card" data-id="${p.id}"><div class="ph"><img decoding="async" data-id="${p.id}" ${IMG[p.id]?`src="${IMG[p.id]}"`:""} alt="${esc(p.nome)}">${b?`<span class="tag">${b}</span>`:""}</div><div class="nm">${esc(p.nome)}</div><div class="sz">${shortSizes(p).map(s=>`<i>${esc(s)}</i>`).join("")}</div></button>`}).join("");
-  observe();
+  $("grid").innerHTML = list.map(p=>{const b=badge(p);return `<button class="card" data-id="${p.id}"><div class="ph"><img loading="lazy" decoding="async" src="${p.fotos[0]}" alt="${esc(p.nome)}">${p.fotos.length>1?`<span class="nfo">${p.fotos.length} fotos</span>`:""}${b?`<span class="tag">${b}</span>`:""}</div><div class="nm">${esc(p.nome)}</div><div class="sz">${shortSizes(p).map(s=>`<i>${esc(s)}</i>`).join("")}</div></button>`}).join("");
 }
-const IMG = {}, LOADING = {};
-function loadChunk(c){
-  if(!LOADING[c]) LOADING[c] = fetch(`c${String(c).padStart(2,"0")}.json`).then(r=>r.json()).then(d=>{
-    Object.assign(IMG,d);
-    document.querySelectorAll("img[data-id]:not([src])").forEach(im=>{if(IMG[im.dataset.id])im.src=IMG[im.dataset.id]});
-  }).catch(()=>{delete LOADING[c]});
-  return LOADING[c];
-}
-const io = "IntersectionObserver" in window ? new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);const p=BYID[e.target.dataset.id];if(p)loadChunk(p.c)}})},{rootMargin:"600px"}) : null;
-function observe(){document.querySelectorAll("#grid img[data-id]:not([src])").forEach(im=>{ if(io) io.observe(im); else loadChunk(BYID[im.dataset.id].c) })}
-let BYID = {};
 $("grid").onclick = e=>{const c=e.target.closest(".card");if(c)openP(c.dataset.id)};
 let tq;$("q").oninput = e=>{clearTimeout(tq);tq=setTimeout(()=>{st.q=e.target.value.trim();render()},120)};
 
@@ -144,14 +207,19 @@ let cur=null, curSize=null;
 function openP(id){
   cur = ALL.find(p=>p.id===id); curSize=null; if(!cur)return;
   const tags=[...cur.temporada,...cur.versao];
-  $("sheet").innerHTML = `<div class="big"><img data-id="${cur.id}" ${IMG[cur.id]?`src="${IMG[cur.id]}"`:""} alt=""><button class="x" id="x" aria-label="Fechar">×</button></div>
+  $("sheet").innerHTML = `<div class="big"><div class="track" id="track">${cur.fotos.map((f,i)=>`<img src="${f}" ${i>1?'loading="lazy"':''} alt="">`).join("")}</div><button class="x" id="x" aria-label="Fechar">×</button>${cur.fotos.length>1?`<button class="nav prev" id="prev" aria-label="Anterior">‹</button><button class="nav next" id="next" aria-label="Próxima">›</button><div class="dots" id="dots">${cur.fotos.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div>`:""}</div>
   <div class="bd"><h2>${esc(cur.nome)}</h2>${tags.length?`<div class="tags">${tags.map(t=>`<span>${esc(t)}</span>`).join("")}</div>`:""}
   <h3>Tamanhos disponíveis</h3><div class="sizes" id="sz">${cur.tamanhos.map(s=>`<button data-s="${esc(s)}">${esc(s)}</button>`).join("")}</div>
   <div class="cta"><a class="btn p" id="order" href="#" target="_blank" rel="noopener">${WHATSAPP?"Pedir no WhatsApp":"Pedir no Instagram"}</a>
   <button class="btn s" id="copy">Copiar nome da camisa</button></div>
   <p class="hint">${WHATSAPP?"":"O nome da camisa é copiado ao tocar em Pedir — é só colar na conversa."}</p></div>`;
   $("modal").classList.add("open"); document.body.style.overflow="hidden";
-  $("x").onclick=closeP; updOrder(); if(!IMG[cur.id]) loadChunk(cur.c);
+  $("x").onclick=closeP; updOrder();
+  if(cur.fotos.length>1){const t=$("track"),n=cur.fotos.length;
+    const idx=()=>Math.round(t.scrollLeft/t.clientWidth);
+    t.onscroll=()=>{const k=idx();[...$("dots").children].forEach((d,i)=>d.classList.toggle("on",i===k))};
+    $("prev").onclick=()=>t.scrollTo({left:((idx()-1+n)%n)*t.clientWidth,behavior:"smooth"});
+    $("next").onclick=()=>t.scrollTo({left:((idx()+1)%n)*t.clientWidth,behavior:"smooth"});}
   $("sz").onclick=e=>{const b=e.target.closest("button");if(!b)return;curSize=curSize===b.dataset.s?null:b.dataset.s;[...$("sz").children].forEach(x=>x.classList.toggle("on",x.dataset.s===curSize));updOrder()};
   $("copy").onclick=()=>copy(msg());
   $("order").onclick=()=>{ if(!WHATSAPP) copy(msg(),true) };
@@ -165,10 +233,10 @@ async function copy(t,quiet){try{await navigator.clipboard.writeText(t);toast(qu
 function toast(t){const el=$("toast");el.textContent=t;el.style.display="block";clearTimeout(el._t);el._t=setTimeout(()=>el.style.display="none",2200)}
 
 fetch("data.json",{cache:"no-cache"}).then(r=>r.json()).then(d=>{
-  ALL = d.produtos; ALL.forEach(p=>BYID[p.id]=p);
+  ALL = d.produtos;
   const dt=new Date(d.atualizado);
   $("upd").textContent = "atualizado em "+dt.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric"});
-  renderChips(); render();
+  renderChips(); route();
 }).catch(()=>{$("upd").textContent="não foi possível carregar";});
 </script>
 </body>
