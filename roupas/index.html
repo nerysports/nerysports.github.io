@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nery Sports — Roupas Esportivas</title>
+<meta name="theme-color" content="#0b0b0c">
+<meta name="description" content="Camisas dry e poliamida, regatas, shorts, bermudas, leggings e casacos. Monte seu pedido e envie pelo WhatsApp.">
+<meta property="og:title" content="Nery Sports — Roupas Esportivas">
+<meta property="og:description" content="Camisas, regatas, shorts, leggings e mais. Monte seu pedido e envie pelo WhatsApp.">
+<meta property="og:image" content="https://nerysports.github.io/icon-512.png">
+<meta property="og:url" content="https://nerysports.github.io/roupas/">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0c;--card:#151413;--line:#2c2924;--text:#efe9dc;--mut:#a59f92;--acc:#d6b161;--gold:linear-gradient(135deg,#f6dd9a 0%,#d6b161 45%,#a8792a 100%);--ink:#141210}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background-color:var(--bg);background-image:repeating-conic-gradient(rgba(255,255,255,.025) 0 25%,transparent 0 50%);background-size:6px 6px;color:var(--text);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+header{padding:22px 16px 10px;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
+.brand img{width:72px;height:72px;border-radius:16px;border:1px solid #3a3226;box-shadow:0 6px 24px rgba(214,177,97,.15)}
+.brand h1{font-family:Montserrat,sans-serif;font-weight:900;font-size:25px;letter-spacing:.5px;text-transform:uppercase;line-height:1}
+.brand h1 span{display:block;font-size:12px;font-weight:700;letter-spacing:.3em;margin-top:6px;background:var(--gold);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{color:var(--mut);font-size:12px;display:block;margin-top:6px}
+.other{color:var(--acc);text-decoration:none;font-size:13px;font-weight:600;border:1px solid #4a3f2b;border-radius:999px;padding:8px 14px;white-space:nowrap}
+.note{max-width:1200px;margin:4px auto 0;padding:0 16px}
+.note div{border:1px solid #3a3226;background:rgba(214,177,97,.07);border-radius:12px;padding:10px 14px;font-size:13px;color:#e2d6bb;line-height:1.45}
+.bar{position:sticky;top:0;z-index:5;background:rgba(11,11,12,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-top:12px}
+.bar-in{max-width:1200px;margin:0 auto;padding:10px 16px 8px}
+.search{width:100%;background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:12px;padding:12px 14px;font-size:16px;font-family:inherit}
+.search:focus{outline:2px solid var(--acc);outline-offset:-1px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:8px 0 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:transparent;color:var(--text);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--gold);color:var(--ink);border-color:#c9a24a;font-weight:700}
+main{max-width:1200px;margin:0 auto;padding:12px 16px 110px}
+.countbar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 12px;color:var(--mut);font-size:13px}
+.live{font-size:12px;color:var(--mut)}
+.live b{color:#8fd18f;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;transition:border-color .15s}
+.card:hover{border-color:#5a4b30}
+.ph{aspect-ratio:4/5;background:#1e1c1a;position:relative;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.tag{position:absolute;top:8px;left:8px;background:var(--gold);color:var(--ink);font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px}
+.dots{position:absolute;bottom:8px;left:8px;display:flex;gap:3px}
+.dots i{width:11px;height:11px;border-radius:50%;border:1px solid rgba(255,255,255,.55);display:block}
+.info{padding:10px 11px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.nm{font-size:13.5px;font-weight:600;line-height:1.3}
+.pr{margin-top:auto;font-family:Montserrat,sans-serif;font-weight:800;font-size:17px;color:var(--acc)}
+.pr s{color:var(--mut);font-size:12px;font-weight:600;margin-right:6px;font-family:Inter,sans-serif}
+.sz{font-size:11.5px;color:var(--mut)}
+.empty{text-align:center;color:var(--mut);padding:50px 10px}
+/* modal */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:20;display:none;align-items:flex-end;justify-content:center}
+.ov.open{display:flex}
+@media(min-width:760px){.ov{align-items:center}}
+.sheet{background:#121110;border:1px solid var(--line);width:100%;max-width:880px;max-height:94vh;overflow:auto;border-radius:18px 18px 0 0}
+@media(min-width:760px){.sheet{border-radius:18px;display:grid;grid-template-columns:1fr 1fr}}
+.gal{position:relative;background:#1a1816;aspect-ratio:4/5}
+.gal img{width:100%;height:100%;object-fit:cover;display:block}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:20px;cursor:pointer}
+.nav.l{left:8px}.nav.r{right:8px}
+.gdots{position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:5px}
+.gdots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35)}
+.gdots i.on{background:var(--acc)}
+.x{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(0,0,0,.6);color:#fff;font-size:20px;cursor:pointer;z-index:2}
+.det{padding:18px 18px 22px;display:flex;flex-direction:column;gap:14px}
+.det h2{font-family:Montserrat,sans-serif;font-size:19px;font-weight:800;line-height:1.25}
+.det .pr{font-size:24px}
+.lb{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+.opts{display:flex;flex-wrap:wrap;gap:7px}
+.opt{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px}
+.opt i{width:14px;height:14px;border-radius:50%;border:1px solid rgba(255,255,255,.4);display:block}
+.opt.on{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+.opt:disabled{opacity:.3;cursor:default;text-decoration:line-through}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:18px;cursor:pointer}
+.qty b{min-width:24px;text-align:center;font-size:16px}
+.add{background:var(--gold);color:var(--ink);border:0;border-radius:12px;padding:14px;font-size:15px;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif;letter-spacing:.02em}
+.add:disabled{opacity:.45;cursor:default}
+.hint{font-size:12px;color:var(--mut)}
+.ok{font-size:13px;color:#8fd18f;min-height:18px}
+/* cart */
+.fab{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:15;background:var(--gold);color:var(--ink);border:0;border-radius:999px;padding:14px 22px;font-weight:800;font-size:15px;box-shadow:0 8px 30px rgba(0,0,0,.5);cursor:pointer;display:none;font-family:Montserrat,sans-serif;white-space:nowrap}
+.fab.show{display:block}
+.cart{padding:20px 18px 22px;display:flex;flex-direction:column;gap:12px}
+@media(min-width:760px){.cart{grid-column:1/-1}}
+.cart h2{font-family:Montserrat,sans-serif;font-size:19px;font-weight:800}
+.it{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:10px}
+.it img{width:56px;height:70px;object-fit:cover;border-radius:8px;background:#1e1c1a}
+.it .t{font-size:13px;font-weight:600;line-height:1.3}
+.it .s{font-size:12px;color:var(--mut);margin-top:3px}
+.it .r{text-align:right;font-weight:700;font-size:14px}
+.it .r button{display:block;margin-top:6px;background:none;border:0;color:#d98b7a;font-size:12px;cursor:pointer;margin-left:auto}
+.it .q{display:inline-flex;align-items:center;gap:6px;margin-top:6px}
+.it .q button{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
+.tot{display:flex;justify-content:space-between;font-family:Montserrat,sans-serif;font-weight:800;font-size:18px;padding-top:4px}
+.wa{background:#25d366;color:#05210f;border:0;border-radius:12px;padding:15px;font-size:15px;font-weight:800;cursor:pointer;font-family:Montserrat,sans-serif}
+.lnk{background:none;border:0;color:var(--mut);font-size:13px;cursor:pointer;text-decoration:underline}
+footer{max-width:1200px;margin:0 auto;padding:0 16px 120px;color:var(--mut);font-size:12px;text-align:center}
+footer a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="./" aria-label="Início"><img src="logo.jpg" alt="Nery Sports">
+    <div><h1>Nery Sports<span>ROUPAS ESPORTIVAS</span></h1><small>Monte seu pedido e envie pelo WhatsApp</small></div></a>
+  <a class="other" href="../">Camisas de time →</a>
+</header>
+<div class="note"><div><b>Peças sob encomenda.</b> Escolha cor, tamanho e quantidade, monte seu pedido e envie pelo WhatsApp. O prazo de entrega a gente confirma por lá.</div></div>
+<div class="bar"><div class="bar-in">
+  <input id="q" class="search" type="search" placeholder="Buscar: dry, regata, legging, bermuda…" autocomplete="off">
+  <div class="chips" id="cats"></div>
+</div></div>
+<main>
+  <div class="countbar"><span id="count"></span><span class="live" id="live"></span></div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>Nery Sports · <a href="https://instagram.com/_nerysports_" target="_blank" rel="noopener">@_nerysports_</a> · WhatsApp (75) 9 8145-5157</footer>
+
+<button class="fab" id="fab"></button>
+<div class="ov" id="ov"><div class="sheet" id="sheet"></div></div>
+
+<script>
+const WA='5575981455157';
+const SRC={A:'https://cdn-op.vesti.co/p/1992701/',B:'https://cdn-op.vesti.mobi/p/1992701/'};
+const API='https://apivesti.vesti.mobi/appmarca/';
+const CO='0aa2446a-dd5e-4372-a801-4247f438c474', CAT='756a08d4d4e9662';
+const preco=p=>p*2+5;
+const brl=v=>'R$ '+v.toFixed(2).replace('.',',');
+const HEX={'PRETO':'#111','BRANCO':'#f4f4f4','OFF':'#ece6d2','CREME':'#e4d2a8','BEGE':'#d8c3a0','BEGE ESCURO':'#a98f6a','CAQUI':'#b39c6d','MARROM':'#6b4523','MOSTARDA':'#c9a227','DOURADO':'#d4af37','LARANJA':'#f07a1f','VERMELHO':'#d32020','VINHO':'#6d1028','UVA':'#5a1f5c','ROXO':'#7b3fb0','LILAS':'#c2a8cf','ROSA':'#e37ab2','ROSA CLARO':'#f5c6d6','ROSA NEON':'#ff2fa8','ROSE':'#c98b80','SALMAO':'#f39b86','AZUL CLARO':'#7fcff0','AZUL TURQUESA':'#16bfe0','AZUL PETROLEO':'#155e6e','ROYAL':'#1e4fd8','MARINHO':'#14234f','VERDE':'#3fa34d','VERDE CLARO':'#a9e3c9','VERDE ESCURO':'#174d22','VERDE NEON':'#7dff3a','VERDE PETROLEO':'#1c4f4a','MILITAR':'#4b5320','CINZA':'#9a9a9a','CINZA CLARO':'#cfcfcf','CHUMBO':'#4a4a4a'};
+const hex=n=>HEX[n]||'#777';
+const SMALL={NK:'NK',ADD:'ADD',UV:'UV','3D':'3D',EM:'em',DE:'de',E:'e',PRO:'Pro'};
+const FIX={SLIN:'Slim',FEIMNINO:'Feminino',MACHAO:'Machão',COMPRESSAO:'Compressão','COMPRESSÃO':'Compressão',TERMICO:'Térmico',MAO:'Mão',MEDIO:'Médio',BASICA:'Básica',RETRO:'Retrô',IMPERMEAVEL:'Impermeável',SUETER:'Suéter',CALCA:'Calça',PREMIO:'Prêmio',FACAO:'Facão',SIMBOLO:'Símbolo',ZIPER:'Zíper',ADI365:'Adi365',TACTEL:'Tactel'};
+function nome(s){
+  s=s.replace(/\(MULTIMARCA\)/i,'').replace(/\bPROMOCIONAL\b/i,'').replace(/\s+/g,' ').trim();
+  return s.replace(/[A-Za-zÀ-ú0-9\/]+|\([^)]*\)/g,w=>{
+    if(w[0]==='(') return '('+w.slice(1,-1).toLowerCase()+')';
+    const U=w.toUpperCase(); if(FIX[U])return FIX[U]; if(SMALL[U]!==undefined)return SMALL[U];
+    if(w.includes('/'))return w.split('/').map(x=>x.charAt(0).toUpperCase()+x.slice(1).toLowerCase()).join('/');
+    return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();
+  }).replace(/^./,c=>c.toUpperCase());
+}
+const corNome=n=>n.charAt(0)+n.slice(1).toLowerCase();
+const tam=t=>(t==='U'||t==='UN')?'Único':t;
+function cats(p){
+  const n=p.n.toUpperCase(), c=p.c.toUpperCase(), out=new Set();
+  const fem=/FEMININ|FEIMNINO|BABY LOOK|LEGGING|SHORTINHO|PEDAL/.test(n)||/FEMININ/.test(c);
+  if(/MEIA|MALA|BOLSA/.test(n)) out.add('Acessórios');
+  else if(/REGATA|MACHAO/.test(n)) out.add('Regatas');
+  else if(/CONJUNTO/.test(n)) out.add('Conjuntos');
+  else if(/CASACO|CASAQUINHO|CORTA VENTO|BOBOJACO|SUETER/.test(n)) out.add('Casacos');
+  else if(/CAL[CÇ]A|LEGGING/.test(n)) out.add('Calças e leggings');
+  else if(/SHORT|BERMUDA|MAURICINHO/.test(n)) out.add('Shorts e bermudas');
+  else if(/OVER|TEXTURIZADA|POLO/.test(n)||/CASUAL/.test(c)) out.add('Casual e polo');
+  else if(/POLIAMIDA|COMPRESS|UV/.test(n)) out.add('Camisas poliamida');
+  else if(/CAMISA/.test(n)) out.add('Camisas dry');
+  else out.add('Outros');
+  if(fem) out.add('Feminino');
+  return [...out];
+}
+const ORDEM=['Camisas dry','Camisas poliamida','Regatas','Casual e polo','Shorts e bermudas','Calças e leggings','Casacos','Conjuntos','Feminino','Acessórios','Outros'];
+const url=s=>s?(SRC[s[0]]?SRC[s[0]]+s.slice(1):s):'';
+const md=u=>u.replace(/-(lg|og)\.(jpe?g|png|webp)$/,'-md.jpeg');
+
+let DATA=[], cat='Todos', busca='';
+function prep(raw){
+  return raw.map(p=>{
+    const T=p.t.split(' ');
+    const est=(p.e||'').split(' ').filter(Boolean).map(x=>[+x.slice(0,-1),x.charCodeAt(x.length-1)-97]);
+    const geral=(p.m||[]).filter(x=>!/\/$/.test(x));
+    const cores=p.k.map(([n,m],i)=>({n,i,fotos:(m||[]).filter(x=>!/\/$/.test(x)),tams:[...new Set(est.filter(e=>e[0]===i).map(e=>tam(T[e[1]])))]})).filter(c=>c.tams.length);
+    const todas=[...new Set([...cores.flatMap(c=>c.fotos),...geral])];
+    const RK=['Único','PP','P','P/M','M','G','G/GG','GG','XG','EG','EXG','EGG','EXGG','G1','G2','G3','G4','G5','G6'];
+    const allT=[...new Set(T.map(tam))].sort((a,b)=>(RK.indexOf(a)+99*(RK.indexOf(a)<0))-(RK.indexOf(b)+99*(RK.indexOf(b)<0)));
+    return {id:p.i,nome:nome(p.n),busca:(p.n+' '+p.c).toLowerCase(),preco:preco(p.p),de:p.po?preco(p.po):0,cats:cats(p),cores,geral,todas,ordemT:allT,
+      tams:allT.filter(t=>cores.some(c=>c.tams.includes(t)))};
+  }).filter(p=>p.cores.length&&p.todas.length);
+}
+function fotosCor(p,c){return c&&c.fotos.length?[...c.fotos,...p.geral]:p.todas}
+
+/* ---------- lista ---------- */
+const $=s=>document.querySelector(s);
+function renderCats(){
+  const cnt={}; DATA.forEach(p=>p.cats.forEach(c=>cnt[c]=(cnt[c]||0)+1));
+  const list=['Todos',...ORDEM.filter(c=>cnt[c])];
+  $('#cats').innerHTML=list.map(c=>`<button class="chip${c===cat?' on':''}" data-c="${c}">${c}${c==='Todos'?'':' · '+cnt[c]}</button>`).join('');
+}
+function render(){
+  const q=busca.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const L=DATA.filter(p=>(cat==='Todos'||p.cats.includes(cat))&&(!q||q.split(/\s+/).every(w=>(p.busca+' '+p.nome.toLowerCase()).normalize('NFD').replace(/[̀-ͯ]/g,'').includes(w))));
+  $('#count').textContent=L.length+(L.length===1?' produto':' produtos');
+  $('#grid').innerHTML=L.length?L.map(p=>{
+    const f=url(p.todas[0]);
+    return `<div class="card" data-id="${p.id}"><div class="ph"><img loading="lazy" src="${md(f)}" onerror="this.onerror=null;this.src='${f}'" alt="">${p.de?'<span class="tag">Promoção</span>':''}<div class="dots">${p.cores.slice(0,7).map(c=>`<i style="background:${hex(c.n)}"></i>`).join('')}</div></div>
+    <div class="info"><div class="nm">${p.nome}</div><div class="sz">${p.tams.join(' · ')}</div><div class="pr">${p.de?`<s>${brl(p.de)}</s>`:''}${brl(p.preco)}</div></div></div>`}).join(''):'<div class="empty">Nenhum produto encontrado.</div>';
+}
+$('#cats').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;cat=b.dataset.c;renderCats();render();window.scrollTo({top:$('.bar').offsetTop-1,behavior:'smooth'})};
+$('#q').oninput=e=>{busca=e.target.value;render()};
+$('#grid').onclick=e=>{const c=e.target.closest('.card');if(c)abrir(c.dataset.id)};
+
+/* ---------- produto ---------- */
+let cur=null, sel={cor:null,tam:null,qtd:1,foto:0};
+function abrir(id){
+  cur=DATA.find(p=>p.id===id); if(!cur)return;
+  sel={cor:cur.cores.length===1?cur.cores[0]:null,tam:null,qtd:1,foto:0};
+  if(cur.ordemT.length===1&&sel.cor)sel.tam=sel.cor.tams[0];
+  desenhar(); $('#ov').classList.add('open'); document.body.style.overflow='hidden';
+  try{history.pushState({m:1},'','#p-'+id)}catch(e){}
+}
+function fechar(){ $('#ov').classList.remove('open'); document.body.style.overflow=''; if(location.hash)try{history.replaceState(null,'',location.pathname)}catch(e){} }
+function desenhar(){
+  const p=cur, fs=fotosCor(p,sel.cor), f=url(fs[sel.foto%fs.length]);
+  const tamsOk=sel.cor?sel.cor.tams:p.tams;
+  $('#sheet').innerHTML=`<div class="gal"><button class="x" data-a="x">×</button><img src="${f}" alt="">
+   ${fs.length>1?`<button class="nav l" data-a="prev">‹</button><button class="nav r" data-a="next">›</button><div class="gdots">${fs.map((_,i)=>`<i class="${i===sel.foto%fs.length?'on':''}"></i>`).join('')}</div>`:''}</div>
+   <div class="det"><h2>${p.nome}</h2><div class="pr">${p.de?`<s>${brl(p.de)}</s>`:''}${brl(p.preco)}</div>
+   <div><div class="lb">Cor${sel.cor?': '+corNome(sel.cor.n):''}</div><div class="opts">${p.cores.map(c=>`<button class="opt${sel.cor===c?' on':''}" data-cor="${c.i}"><i style="background:${hex(c.n)}"></i>${corNome(c.n)}</button>`).join('')}</div></div>
+   <div><div class="lb">Tamanho</div><div class="opts">${p.ordemT.filter(t=>p.tams.includes(t)).map(t=>`<button class="opt${sel.tam===t?' on':''}" data-tam="${t}" ${tamsOk.includes(t)?'':'disabled'}>${t}</button>`).join('')}</div>
+   ${sel.cor?'':'<div class="hint" style="margin-top:6px">Escolha a cor para ver os tamanhos disponíveis.</div>'}</div>
+   <div><div class="lb">Quantidade</div><div class="qty"><button data-a="menos">−</button><b>${sel.qtd}</b><button data-a="mais">+</button></div></div>
+   <button class="add" data-a="add" ${sel.cor&&sel.tam?'':'disabled'}>Adicionar ao pedido · ${brl(p.preco*sel.qtd)}</button>
+   <div class="ok" id="ok"></div></div>`;
+}
+$('#ov').onclick=e=>{ if(e.target.id==='ov'){fechar();return}
+  const b=e.target.closest('button'); if(!b)return;
+  if($('#sheet').dataset.mode==='cart'){cartClick(b);return}
+  const a=b.dataset.a;
+  if(a==='x')return fechar();
+  if(a==='prev'||a==='next'){const n=fotosCor(cur,sel.cor).length;sel.foto=(sel.foto+(a==='next'?1:n-1))%n;return desenhar()}
+  if(b.dataset.cor!=null){sel.cor=cur.cores.find(c=>c.i==b.dataset.cor);sel.foto=0;if(sel.tam&&!sel.cor.tams.includes(sel.tam))sel.tam=null;if(!sel.tam&&sel.cor.tams.length===1)sel.tam=sel.cor.tams[0];return desenhar()}
+  if(b.dataset.tam){sel.tam=b.dataset.tam;return desenhar()}
+  if(a==='menos'){sel.qtd=Math.max(1,sel.qtd-1);return desenhar()}
+  if(a==='mais'){sel.qtd=Math.min(50,sel.qtd+1);return desenhar()}
+  if(a==='add'){addCart();desenhar();$('#ok').textContent='✓ Adicionado ao pedido';}
+};
+let tx=null;
+$('#sheet').addEventListener('touchstart',e=>{if(e.target.closest('.gal'))tx=e.touches[0].clientX},{passive:true});
+$('#sheet').addEventListener('touchend',e=>{if(tx==null||!cur||$('#sheet').dataset.mode==='cart')return;const d=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(d)>40){const n=fotosCor(cur,sel.cor).length;sel.foto=(sel.foto+(d<0?1:n-1))%n;desenhar()}});
+window.addEventListener('popstate',()=>{if($('#ov').classList.contains('open'))fechar()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')fechar()});
+
+/* ---------- pedido ---------- */
+let CART=[]; try{CART=JSON.parse(localStorage.getItem('ns_roupas_cart')||'[]')}catch(e){CART=[]}
+const salvar=()=>{try{localStorage.setItem('ns_roupas_cart',JSON.stringify(CART))}catch(e){} fab()};
+function addCart(){
+  const fs=fotosCor(cur,sel.cor);
+  const ex=CART.find(x=>x.id===cur.id&&x.cor===sel.cor.n&&x.tam===sel.tam);
+  if(ex)ex.qtd+=sel.qtd; else CART.push({id:cur.id,nome:cur.nome,cor:sel.cor.n,tam:sel.tam,qtd:sel.qtd,preco:cur.preco,foto:fs[0]});
+  salvar();
+}
+function fab(){const n=CART.reduce((a,x)=>a+x.qtd,0),t=CART.reduce((a,x)=>a+x.qtd*x.preco,0);
+  $('#fab').textContent=`Ver pedido · ${n} ${n===1?'peça':'peças'} · ${brl(t)}`;$('#fab').classList.toggle('show',n>0)}
+$('#fab').onclick=()=>{abrirCart()};
+function abrirCart(){ $('#sheet').dataset.mode='cart'; drawCart(); $('#ov').classList.add('open'); document.body.style.overflow='hidden'; }
+function drawCart(){
+  const t=CART.reduce((a,x)=>a+x.qtd*x.preco,0);
+  $('#sheet').innerHTML=`<div class="cart"><div style="display:flex;justify-content:space-between;align-items:center"><h2>Seu pedido</h2><button class="lnk" data-a="x">Fechar</button></div>
+   ${CART.length?CART.map((x,i)=>`<div class="it"><img src="${md(url(x.foto))}" onerror="this.onerror=null;this.src='${url(x.foto)}'" alt=""><div><div class="t">${x.nome}</div><div class="s">${corNome(x.cor)} · ${x.tam}</div>
+     <div class="q"><button data-a="m" data-i="${i}">−</button><b>${x.qtd}</b><button data-a="p" data-i="${i}">+</button></div></div>
+     <div class="r">${brl(x.qtd*x.preco)}<button data-a="rm" data-i="${i}">remover</button></div></div>`).join('')
+   +`<div class="tot"><span>Total</span><span>${brl(t)}</span></div>
+   <button class="wa" data-a="wa">Enviar pedido pelo WhatsApp</button>
+   <div class="hint">Peças sob encomenda. O prazo e a forma de pagamento a gente confirma pelo WhatsApp.</div>
+   <button class="lnk" data-a="clr">Limpar pedido</button>`:'<div class="empty">Seu pedido está vazio.</div>'}</div>`;
+}
+function cartClick(b){
+  const a=b.dataset.a,i=+b.dataset.i;
+  if(a==='x'){$('#sheet').dataset.mode='';return fechar()}
+  if(a==='m'){CART[i].qtd--; if(CART[i].qtd<1)CART.splice(i,1)}
+  if(a==='p')CART[i].qtd++;
+  if(a==='rm')CART.splice(i,1);
+  if(a==='clr')CART=[];
+  if(a==='wa'){
+    const t=CART.reduce((s,x)=>s+x.qtd*x.preco,0);
+    const msg='Olá! Quero fazer este pedido de roupas (sob encomenda):\n\n'+CART.map(x=>`• ${x.qtd}x ${x.nome} — ${corNome(x.cor)} / ${x.tam} — ${brl(x.qtd*x.preco)}`).join('\n')+`\n\nTotal: ${brl(t)}`;
+    window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank');return;
+  }
+  salvar(); drawCart();
+}
+const _fechar=fechar; fechar=function(){ $('#sheet').dataset.mode=''; _fechar(); };
+
+/* ---------- dados: cópia de reserva + atualização ao vivo ---------- */
+function aplicar(raw,live){
+  const d=prep(raw); if(!d.length)return false;
+  DATA=d; renderCats(); render();
+  if(live){ $('#live').innerHTML='<b>●</b> Estoque atualizado agora';
+    CART=CART.filter(x=>DATA.some(p=>p.id===x.id)); salvar(); }
+  const h=location.hash.match(/^#p-(.+)/); if(h&&!$('#ov').classList.contains('open'))abrir(h[1]);
+  return true;
+}
+async function aoVivo(){
+  const short=u=>{for(const k in SRC)if(u&&u.startsWith(SRC[k]))return k+u.slice(SRC[k].length);return u||''};
+  const fm=m=>short(m&&(m.normal&&m.normal.fallback||m.zoom&&m.zoom.fallback));
+  const lista=[];
+  for(let pg=1;pg<15;pg++){
+    const r=await fetch(`${API}v2/catalogue/${CAT}/company/rbstore/?page=${pg}&perpage=60&with_prices=true`); if(!r.ok)throw 0;
+    const j=await r.json(); if(!j.products||!j.products.length)break; lista.push(...j.products); if(!j.links||!j.links.next)break;
+  }
+  if(lista.length<20)throw 0;
+  const out=[];
+  for(let i=0;i<lista.length;i+=8){
+    await Promise.all(lista.slice(i,i+8).map(async(it,k)=>{
+      try{
+        const r=await fetch(`${API}v1/products/company/${CO}/product/${encodeURIComponent(it.slug)}/showcase?cid=${CAT}&reseller_id=null`); if(!r.ok)return;
+        const g=(await r.json()).product_group; if(!g||g.active===false)return;
+        const cs=(g.colors||[]).filter(c=>c.active!==false), ss=g.sizes||[];
+        const ci={},si={}; cs.forEach((c,x)=>ci[c.id]=x); ss.forEach((s,x)=>si[s.id]=x);
+        const pr=(g.prices&&g.prices[0])||g, promo=pr.promotion&&pr.price_promotional>0;
+        const o={i:g.id.slice(0,8),o:i+k,n:g.name.trim(),p:promo?pr.price_promotional:pr.price,c:(g.categories||[]).map(x=>x.name.trim()).join('|'),
+          k:cs.map(c=>[c.name.replace(/^\d+\s*-\s*|^[A-Z]{2}\s*-\s*/,'').trim(),(c.media||[]).filter(x=>x.type==='pic').map(fm)]),
+          m:(g.media||[]).filter(x=>x.type==='pic').map(fm),t:ss.map(s=>s.name).join(' '),
+          e:(g.stocks||[]).filter(s=>s.sell&&s.quantity>0&&ci[s.color_id]!=null&&si[s.size_id]!=null).map(s=>ci[s.color_id]+String.fromCharCode(97+si[s.size_id])).join(' ')};
+        if(promo)o.po=pr.price; out.push(o);
+      }catch(e){}
+    }));
+  }
+  if(out.length<lista.length*0.8)throw 0;
+  out.sort((a,b)=>a.o-b.o); return out;
+}
+(async()=>{
+  fab();
+  try{const s=await (await fetch('snapshot.json',{cache:'no-cache'})).json(); aplicar(s,false); $('#live').textContent='Atualizando estoque…';}catch(e){}
+  try{const v=await aoVivo(); aplicar(v,true);}catch(e){ if(DATA.length)$('#live').textContent=''; else $('#grid').innerHTML='<div class="empty">Não foi possível carregar os produtos agora. Tente de novo em instantes.</div>'; }
+})();
+</script>
+</body>
+</html>
