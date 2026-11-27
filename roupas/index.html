@@ -157,17 +157,18 @@ function cats(p){
   else if(/CASACO|CASAQUINHO|CORTA VENTO|BOBOJACO|SUETER/.test(n)) out.add('Casacos');
   else if(/CAL[CÇ]A|LEGGING/.test(n)) out.add('Calças e leggings');
   else if(/SHORT|BERMUDA|MAURICINHO/.test(n)) out.add('Shorts e bermudas');
-  else if(/OVER|TEXTURIZADA|POLO/.test(n)||/CASUAL/.test(c)) out.add('Casual e polo');
+  else if(/OVER|TEXTURIZADA/.test(n)||/CASUAL/.test(c)) out.add('Casual');
   else if(/POLIAMIDA|COMPRESS|UV/.test(n)) out.add('Camisas poliamida');
   else if(/CAMISA/.test(n)) out.add('Camisas dry');
   else out.add('Outros');
   if(fem) out.add('Feminino');
   return [...out];
 }
-const ORDEM=['Camisas dry','Camisas poliamida','Regatas','Casual e polo','Shorts e bermudas','Calças e leggings','Casacos','Conjuntos','Feminino','Acessórios','Outros'];
+const ORDEM=['Camisas dry','Camisas poliamida','Regatas','Casual','Shorts e bermudas','Calças e leggings','Casacos','Conjuntos','Feminino','Acessórios','Outros'];
 const url=s=>s?(SRC[s[0]]?SRC[s[0]]+s.slice(1):s):'';
 const md=u=>u.replace(/-(lg|og)\.(jpe?g|png|webp)$/,'-md.jpeg');
 
+const FORA=p=>/SUETER|SU[ÉE]TER|CASACO|CASAQUINHO|CORTA VENTO|BOBOJACO|JAQUETA|BLUSA DE FRIO|MOLETOM|\bPOLO\b/i.test(p.busca);
 let DATA=[], cat='Todos', busca='';
 function prep(raw){
   return raw.map(p=>{
@@ -180,7 +181,7 @@ function prep(raw){
     const allT=[...new Set(T.map(tam))].sort((a,b)=>(RK.indexOf(a)+99*(RK.indexOf(a)<0))-(RK.indexOf(b)+99*(RK.indexOf(b)<0)));
     return {id:p.i,nome:nome(p.n),busca:(p.n+' '+p.c).toLowerCase(),preco:preco(p.p),de:p.po?preco(p.po):0,cats:cats(p),cores,geral,todas,ordemT:allT,
       tams:allT.filter(t=>cores.some(c=>c.tams.includes(t)))};
-  }).filter(p=>p.cores.length&&p.todas.length);
+  }).filter(p=>p.cores.length&&p.todas.length&&!FORA(p));
 }
 function fotosCor(p,c){return c&&c.fotos.length?[...c.fotos,...p.geral]:p.todas}
 
