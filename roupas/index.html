@@ -176,7 +176,7 @@ function prep(raw){
     const geral=(p.m||[]).filter(x=>!/\/$/.test(x));
     const cores=p.k.map(([n,m],i)=>({n,i,fotos:(m||[]).filter(x=>!/\/$/.test(x)),tams:[...new Set(est.filter(e=>e[0]===i).map(e=>tam(T[e[1]])))]})).filter(c=>c.tams.length);
     const todas=[...new Set([...cores.flatMap(c=>c.fotos),...geral])];
-    const RK=['Único','PP','P','P/M','M','G','G/GG','GG','XG','EG','EXG','EGG','EXGG','G1','G2','G3','G4','G5','G6'];
+    const RK=['Único','PP','P','P/M','M','G','G/GG','GG','G1','G2','G3','G4','G5','G6','XG','EG','EXG','EGG','EXGG'];
     const allT=[...new Set(T.map(tam))].sort((a,b)=>(RK.indexOf(a)+99*(RK.indexOf(a)<0))-(RK.indexOf(b)+99*(RK.indexOf(b)<0)));
     return {id:p.i,nome:nome(p.n),busca:(p.n+' '+p.c).toLowerCase(),preco:preco(p.p),de:p.po?preco(p.po):0,cats:cats(p),cores,geral,todas,ordemT:allT,
       tams:allT.filter(t=>cores.some(c=>c.tams.includes(t)))};
