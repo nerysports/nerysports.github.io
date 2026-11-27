@@ -128,17 +128,18 @@ footer a{color:var(--acc)}
 
 <script>
 const WA='5575981455157';
-const SRC={A:'https://cdn-op.vesti.co/p/1992701/',B:'https://cdn-op.vesti.mobi/p/1992701/'};
+const SRC={A:'https://cdn-op.vesti.co/p/1992701/',B:'https://cdn-op.vesti.mobi/p/1992701/',C:'https://cdn.vendizap.com/vendizap-produtos/'};
+const DV_USER='6a3514884611a3cbdf00baa2';
 const API='https://apivesti.vesti.mobi/appmarca/';
 const CO='0aa2446a-dd5e-4372-a801-4247f438c474', CAT='756a08d4d4e9662';
 const preco=p=>{const v=p*2+5;return v===61?59.9:Math.round((v-0.1)*100)/100};
 const brl=v=>'R$ '+v.toFixed(2).replace('.',',');
-const HEX={'PRETO':'#111','BRANCO':'#f4f4f4','OFF':'#ece6d2','CREME':'#e4d2a8','BEGE':'#d8c3a0','BEGE ESCURO':'#a98f6a','CAQUI':'#b39c6d','MARROM':'#6b4523','MOSTARDA':'#c9a227','DOURADO':'#d4af37','LARANJA':'#f07a1f','VERMELHO':'#d32020','VINHO':'#6d1028','UVA':'#5a1f5c','ROXO':'#7b3fb0','LILAS':'#c2a8cf','ROSA':'#e37ab2','ROSA CLARO':'#f5c6d6','ROSA NEON':'#ff2fa8','ROSE':'#c98b80','SALMAO':'#f39b86','AZUL CLARO':'#7fcff0','AZUL TURQUESA':'#16bfe0','AZUL PETROLEO':'#155e6e','ROYAL':'#1e4fd8','MARINHO':'#14234f','VERDE':'#3fa34d','VERDE CLARO':'#a9e3c9','VERDE ESCURO':'#174d22','VERDE NEON':'#7dff3a','VERDE PETROLEO':'#1c4f4a','MILITAR':'#4b5320','CINZA':'#9a9a9a','CINZA CLARO':'#cfcfcf','CHUMBO':'#4a4a4a'};
-const hex=n=>HEX[n]||'#777';
-const SMALL={NK:'NK',ADD:'ADD',UV:'UV','3D':'3D',EM:'em',DE:'de',E:'e',PRO:'Pro'};
-const FIX={SLIN:'Slim',FEIMNINO:'Feminino',MACHAO:'Machão',COMPRESSAO:'Compressão','COMPRESSÃO':'Compressão',TERMICO:'Térmico',MAO:'Mão',MEDIO:'Médio',BASICA:'Básica',RETRO:'Retrô',IMPERMEAVEL:'Impermeável',SUETER:'Suéter',CALCA:'Calça',PREMIO:'Premium',FACAO:'Facão',SIMBOLO:'Símbolo',ZIPER:'Zíper',ADI365:'Adi365',TACTEL:'Tactel'};
+const HEX={'PRETO':'#111','BRANCO':'#f4f4f4','OFF':'#ece6d2','CREME':'#e4d2a8','BEGE':'#d8c3a0','BEGE ESCURO':'#a98f6a','CAQUI':'#b39c6d','MARROM':'#6b4523','MOSTARDA':'#c9a227','DOURADO':'#d4af37','LARANJA':'#f07a1f','VERMELHO':'#d32020','VINHO':'#6d1028','UVA':'#5a1f5c','ROXO':'#7b3fb0','LILAS':'#c2a8cf','ROSA':'#e37ab2','ROSA CLARO':'#f5c6d6','ROSA NEON':'#ff2fa8','ROSE':'#c98b80','SALMAO':'#f39b86','AZUL CLARO':'#7fcff0','AZUL TURQUESA':'#16bfe0','AZUL PETROLEO':'#155e6e','ROYAL':'#1e4fd8','MARINHO':'#14234f','VERDE':'#3fa34d','VERDE CLARO':'#a9e3c9','VERDE ESCURO':'#174d22','VERDE NEON':'#7dff3a','VERDE PETROLEO':'#1c4f4a','MILITAR':'#4b5320','CINZA':'#9a9a9a','CINZA CLARO':'#cfcfcf','CHUMBO':'#4a4a4a','CINZA GRAFITE':'#3d3d3d','GRAFITE':'#3d3d3d','AZUL':'#1f5fd1','AMARELO':'#f2c500','AMARELO PASTEL':'#f5e79a','VERDE MILITAR':'#4b5320','VERDE AGUA':'#7fd6c2','LARANJA NEON':'#ff7a1a','AZUL ROYAL':'#1e4fd8','AZUL MARINHO':'#14234f','VERDE BANDEIRA':'#009c3b'};
+const hex=(n,h)=>HEX[String(n).normalize('NFD').replace(/[\u0300-\u036f]/g,'')]||h||'#777';
+const SMALL={NK:'NK',ADD:'ADD',AD:'ADD',UV:'UV','3D':'3D',EM:'em',DE:'de',DO:'do',DA:'da',COM:'com',E:'e',PRO:'Pro',PM:'PM',MZN:'MZN',MV:'MV',TN:'TN',ON:'ON',DTF:'DTF',ZR:'ZR',CJ:'Conjunto',ALO:'Alo','UV+':'UV+'};
+const FIX={'PROTEÇÂO':'Proteção',PROTECAO:'Proteção',IMPORTADO:'Importado',AIRMAX:'Airmax',UNICA:'Única',ALCA:'Alça',SLIN:'Slim',FEIMNINO:'Feminino',MACHAO:'Machão',COMPRESSAO:'Compressão','COMPRESSÃO':'Compressão',TERMICO:'Térmico',MAO:'Mão',MEDIO:'Médio',BASICA:'Básica',RETRO:'Retrô',IMPERMEAVEL:'Impermeável',SUETER:'Suéter',CALCA:'Calça',PREMIO:'Premium',FACAO:'Facão',SIMBOLO:'Símbolo',ZIPER:'Zíper',ADI365:'Adi365',TACTEL:'Tactel'};
 function nome(s){
-  s=s.replace(/\(MULTIMARCA\)/i,'').replace(/\bPROMOCIONAL\b/i,'').replace(/\s+/g,' ').trim();
+  s=s.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu,'').replace(/\s*-?\s*\b(REF|RF)\b\s*:?\s*\d+/gi,'').replace(/\bDonville\b/gi,'').replace(/\bDV\b/g,'').replace(/\(MULTIMARCA\)/i,'').replace(/\bPROMOCIONAL\b/i,'').replace(/\s*-\s*/g,' ').replace(/\s+/g,' ').trim();
   return s.replace(/[A-Za-zÀ-ú0-9\/]+|\([^)]*\)/g,w=>{
     if(w[0]==='(') return '('+w.slice(1,-1).toLowerCase()+')';
     const U=w.toUpperCase(); if(FIX[U])return FIX[U]; if(SMALL[U]!==undefined)return SMALL[U];
@@ -146,40 +147,44 @@ function nome(s){
     return w.charAt(0).toUpperCase()+w.slice(1).toLowerCase();
   }).replace(/^./,c=>c.toUpperCase());
 }
-const corNome=n=>n.charAt(0)+n.slice(1).toLowerCase();
+const corNome=n=>/^[UÚ]NICA$/i.test(n)?'Única':n.charAt(0)+n.slice(1).toLowerCase();
 const tam=t=>(t==='U'||t==='UN')?'Único':t;
 function cats(p){
   const n=p.n.toUpperCase(), c=p.c.toUpperCase(), out=new Set();
-  const fem=/FEMININ|FEIMNINO|BABY LOOK|LEGGING|SHORTINHO|PEDAL/.test(n)||/FEMININ/.test(c);
+  const fem=/FEMININ|FEIMNINO|BABY LOOK|LEGGING|SHORTINHO|PEDAL|BLUS|\bTOP\b|FRENTE UNICA|SAIA|MACAC|\bALO\b/.test(n)||/FEMININ/.test(c);
   if(/MEIA|MALA|BOLSA/.test(n)) out.add('Acessórios');
   else if(/REGATA|MACHAO/.test(n)) out.add('Regatas');
-  else if(/CONJUNTO/.test(n)) out.add('Conjuntos');
+  else if(/CONJUNTO|^CJ\b|MACAC/.test(n)) out.add('Conjuntos');
   else if(/CASACO|CASAQUINHO|CORTA VENTO|BOBOJACO|SUETER/.test(n)) out.add('Casacos');
   else if(/CAL[CÇ]A|LEGGING/.test(n)) out.add('Calças e leggings');
-  else if(/SHORT|BERMUDA|MAURICINHO/.test(n)) out.add('Shorts e bermudas');
+  else if(/SHORT|BERMUDA|MAURICINHO|SAIA|ELASTANO/.test(n)) out.add('Shorts e bermudas');
   else if(/OVER|TEXTURIZADA/.test(n)||/CASUAL/.test(c)) out.add('Casual');
-  else if(/POLIAMIDA|COMPRESS|UV/.test(n)) out.add('Camisas poliamida');
-  else if(/CAMISA/.test(n)) out.add('Camisas dry');
+  else if(/POLIAMIDA|COMPRESS|\bUV|MICROFIBRA|MANGA LONGA|BLUS/.test(n)) out.add('Camisas poliamida');
+  else if(/CAMISA/.test(n+' '+c)) out.add('Camisas dry');
   else out.add('Outros');
   if(fem) out.add('Feminino');
+  if(/INFANTIL|JUVENIL/.test(n+' '+c)) out.add('Infantil');
+  if(/PLUS/.test(n+' '+c)) out.add('Plus size');
+  if(/BRASIL|SELE[CÇ][AÃ]O/.test(n+' '+c)) out.add('Brasil');
   return [...out];
 }
-const ORDEM=['Camisas dry','Camisas poliamida','Regatas','Casual','Shorts e bermudas','Calças e leggings','Casacos','Conjuntos','Feminino','Acessórios','Outros'];
+const ORDEM=['Camisas dry','Camisas poliamida','Regatas','Conjuntos','Shorts e bermudas','Calças e leggings','Casual','Feminino','Infantil','Plus size','Brasil','Acessórios','Outros'];
 const url=s=>s?(SRC[s[0]]?SRC[s[0]]+s.slice(1):s):'';
-const md=u=>u.replace(/-(lg|og)\.(jpe?g|png|webp)$/,'-md.jpeg');
+const md=u=>u.includes('/vendizap-produtos/')?u.replace('/vendizap-produtos/','/vendizap-produtos-thumbs/'):u.replace(/-(lg|og)\.(jpe?g|png|webp)$/,'-md.jpeg');
 
-const FORA=p=>/SUETER|SU[ÉE]TER|CASACO|CASAQUINHO|CORTA VENTO|BOBOJACO|JAQUETA|BLUSA DE FRIO|MOLETOM|\bPOLO\b/i.test(p.busca);
+const FORA=p=>/SUETER|SU[ÉE]TER|CASACO|CASAQUINHO|CORTA VENTO|BOBOJACO|JAQUETA|BLUSA DE FRIO|MOLETOM|\bPOLO\b|[ÓO]CULOS|ROUPA DE SAIR/i.test(p.busca);
 let DATA=[], cat='Todos', busca='';
 function prep(raw){
   return raw.map(p=>{
-    const T=p.t.split(' ');
+    const T=p.t.includes('~')?p.t.split('~'):p.t.split(' ');
     const est=(p.e||'').split(' ').filter(Boolean).map(x=>[+x.slice(0,-1),x.charCodeAt(x.length-1)-97]);
     const geral=(p.m||[]).filter(x=>!/\/$/.test(x));
-    const cores=p.k.map(([n,m],i)=>({n,i,fotos:(m||[]).filter(x=>!/\/$/.test(x)),tams:[...new Set(est.filter(e=>e[0]===i).map(e=>tam(T[e[1]])))]})).filter(c=>c.tams.length);
+    const cores=p.k.map(([n,m,h],i)=>({n,h,i,fotos:(m||[]).filter(x=>!/\/$/.test(x)),tams:[...new Set(est.filter(e=>e[0]===i).map(e=>tam(T[e[1]])))]})).filter(c=>c.tams.length);
     const todas=[...new Set([...cores.flatMap(c=>c.fotos),...geral])];
     const RK=['Único','PP','P','P/M','M','G','G/GG','GG','G1','G2','G3','G4','G5','G6','XG','EG','EXG','EGG','EXGG'];
-    const allT=[...new Set(T.map(tam))].sort((a,b)=>(RK.indexOf(a)+99*(RK.indexOf(a)<0))-(RK.indexOf(b)+99*(RK.indexOf(b)<0)));
-    return {id:p.i,nome:nome(p.n),busca:(p.n+' '+p.c).toLowerCase(),preco:preco(p.p),de:p.po?preco(p.po):0,cats:cats(p),cores,geral,todas,ordemT:allT,
+    const rk=x=>{const k=RK.indexOf(x);if(k>=0)return k;const m=String(x).match(/\d+/);return 100+(m?+m[0]:0)};
+    const allT=[...new Set(T.map(tam))].sort((a,b)=>rk(a)-rk(b));
+    return {id:p.i,f:p.f||'R',nome:nome(p.n),busca:(p.n+' '+p.c).toLowerCase(),preco:preco(p.p),de:p.po?preco(p.po):0,cats:cats(p),cores,geral,todas,ordemT:allT,
       tams:allT.filter(t=>cores.some(c=>c.tams.includes(t)))};
   }).filter(p=>p.cores.length&&p.todas.length&&!FORA(p));
 }
@@ -198,7 +203,7 @@ function render(){
   $('#count').textContent=L.length+(L.length===1?' produto':' produtos');
   $('#grid').innerHTML=L.length?L.map(p=>{
     const f=url(p.todas[0]);
-    return `<div class="card" data-id="${p.id}"><div class="ph"><img loading="lazy" src="${md(f)}" onerror="this.onerror=null;this.src='${f}'" alt="">${p.de?'<span class="tag">Promoção</span>':''}<div class="dots">${p.cores.slice(0,7).map(c=>`<i style="background:${hex(c.n)}"></i>`).join('')}</div></div>
+    return `<div class="card" data-id="${p.id}"><div class="ph"><img loading="lazy" src="${md(f)}" onerror="this.onerror=null;this.src='${f}'" alt="">${p.de?'<span class="tag">Promoção</span>':''}<div class="dots">${p.cores.slice(0,7).map(c=>`<i style="background:${hex(c.n,c.h)}"></i>`).join('')}</div></div>
     <div class="info"><div class="nm">${p.nome}</div><div class="sz">${p.tams.join(' · ')}</div><div class="pr">${p.de?`<s>${brl(p.de)}</s>`:''}${brl(p.preco)}</div></div></div>`}).join(''):'<div class="empty">Nenhum produto encontrado.</div>';
 }
 $('#cats').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;cat=b.dataset.c;renderCats();render();window.scrollTo({top:$('.bar').offsetTop-1,behavior:'smooth'})};
@@ -221,7 +226,7 @@ function desenhar(){
   $('#sheet').innerHTML=`<div class="gal"><button class="x" data-a="x">×</button><img src="${f}" alt="">
    ${fs.length>1?`<button class="nav l" data-a="prev">‹</button><button class="nav r" data-a="next">›</button><div class="gdots">${fs.map((_,i)=>`<i class="${i===sel.foto%fs.length?'on':''}"></i>`).join('')}</div>`:''}</div>
    <div class="det"><h2>${p.nome}</h2><div class="pr">${p.de?`<s>${brl(p.de)}</s>`:''}${brl(p.preco)}</div>
-   <div><div class="lb">Cor${sel.cor?': '+corNome(sel.cor.n):''}</div><div class="opts">${p.cores.map(c=>`<button class="opt${sel.cor===c?' on':''}" data-cor="${c.i}"><i style="background:${hex(c.n)}"></i>${corNome(c.n)}</button>`).join('')}</div></div>
+   <div><div class="lb">Cor${sel.cor?': '+corNome(sel.cor.n):''}</div><div class="opts">${p.cores.map(c=>`<button class="opt${sel.cor===c?' on':''}" data-cor="${c.i}"><i style="background:${hex(c.n,c.h)}"></i>${corNome(c.n)}</button>`).join('')}</div></div>
    <div><div class="lb">Tamanho</div><div class="opts">${p.ordemT.filter(t=>p.tams.includes(t)).map(t=>`<button class="opt${sel.tam===t?' on':''}" data-tam="${t}" ${tamsOk.includes(t)?'':'disabled'}>${t}</button>`).join('')}</div>
    ${sel.cor?'':'<div class="hint" style="margin-top:6px">Escolha a cor para ver os tamanhos disponíveis.</div>'}</div>
    <div><div class="lb">Quantidade</div><div class="qty"><button data-a="menos">−</button><b>${sel.qtd}</b><button data-a="mais">+</button></div></div>
@@ -252,7 +257,7 @@ const salvar=()=>{try{localStorage.setItem('ns_roupas_cart',JSON.stringify(CART)
 function addCart(){
   const fs=fotosCor(cur,sel.cor);
   const ex=CART.find(x=>x.id===cur.id&&x.cor===sel.cor.n&&x.tam===sel.tam);
-  if(ex)ex.qtd+=sel.qtd; else CART.push({id:cur.id,nome:cur.nome,cor:sel.cor.n,tam:sel.tam,qtd:sel.qtd,preco:cur.preco,foto:fs[0]});
+  if(ex)ex.qtd+=sel.qtd; else CART.push({id:cur.id,f:cur.f,nome:cur.nome,cor:sel.cor.n,tam:sel.tam,qtd:sel.qtd,preco:cur.preco,foto:fs[0]});
   salvar();
 }
 function fab(){const n=CART.reduce((a,x)=>a+x.qtd,0),t=CART.reduce((a,x)=>a+x.qtd*x.preco,0);
@@ -279,7 +284,7 @@ function cartClick(b){
   if(a==='clr')CART=[];
   if(a==='wa'){
     const t=CART.reduce((s,x)=>s+x.qtd*x.preco,0);
-    const msg='Olá! Quero fazer este pedido de roupas (sob encomenda):\n\n'+CART.map(x=>`• ${x.qtd}x ${x.nome} — ${corNome(x.cor)} / ${x.tam} — ${brl(x.qtd*x.preco)}`).join('\n')+`\n\nTotal: ${brl(t)}`;
+    const msg='Olá! Quero fazer este pedido de roupas (sob encomenda):\n\n'+CART.map(x=>`• ${x.qtd}x ${x.nome} — ${corNome(x.cor)} / ${x.tam} — ${brl(x.qtd*x.preco)} [${x.f||'R'}]`).join('\n')+`\n\nTotal: ${brl(t)}`;
     window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank');return;
   }
   salvar(); drawCart();
@@ -324,10 +329,49 @@ async function aoVivo(){
   if(out.length<lista.length*0.8)throw 0;
   out.sort((a,b)=>a.o-b.o); return out;
 }
+async function aoVivoDV(){
+  const call=async pg=>{const r=await fetch('https://app.vendizap.com/webservice/Vitrine/carregarVitrine',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({idUsuario:DV_USER,textoPesquisa:'',categoria:[],filtrosVitrine:{},isTabela:true,permiteCache:true,tipoCache:'geral',produtoURL:null,isMobile:false,paginaGerais:pg,paginaPromocoes:0})});
+    if(!r.ok)throw 0; return r.json()};
+  const lista=[], vistos=new Set(); let catN={};
+  for(let pg=0;pg<15;pg++){
+    const j=await call(pg); if(pg===0)(j.categorias||[]).forEach(c=>catN[(c._id&&c._id.$oid)||c._id||c.id]=String(c.nome||'').trim());
+    const g=(j.listas&&j.listas.listaGaleria)||[]; let novos=0;
+    g.forEach(x=>{if(!vistos.has(x._id)){vistos.add(x._id);lista.push(x);novos++}});
+    if(g.length<40||!novos)break;
+  }
+  if(lista.length<20)throw 0;
+  const hs=u=>{const m=String(u||'').match(/([a-f0-9]{16,}\.(?:webp|jpe?g|png))$/i);return m?'C'+m[1]:''};
+  return lista.filter(p=>p.exibir!==false&&p.ativo!==false).map(p=>{
+    const vs=p.variacoes||[], vc=vs.find(v=>/^cor/i.test(v.nome)), vt=vs.find(v=>/^tamanho/i.test(v.nome));
+    const cs=vc?(vc.variaveis||[]).filter(x=>x.selecionado!==false):[{nome:'Única'}];
+    const ts=vt?(vt.variaveis||[]).filter(x=>x.selecionado!==false):[{nome:'U'}];
+    const imgs=(p.imagens||[]).map(x=>hs(x.linkOriginal||x.link)).filter(Boolean);
+    const corImg=cs.map(c=>c.imagem?hs(c.imagem):'');
+    const ci={},si={}; cs.forEach((c,x)=>ci[c.nome]=x); ts.forEach((t,x)=>si[t.nome]=x);
+    let e=[];
+    const comb=p.estoque&&p.estoque.combinacoes;
+    if(p.controle_estoque&&Array.isArray(comb)){
+      comb.forEach(cb=>{const q=(cb._quantidade||[0])[0]; if(!(q>0))return;
+        const c=vc?ci[cb[vc.nome]]:0, t=vt?si[cb[vt.nome]]:0; if(c==null||t==null)return; e.push(c+String.fromCharCode(97+t));});
+    } else cs.forEach((_,c)=>ts.forEach((_,t)=>e.push(c+String.fromCharCode(97+t))));
+    const ap=p.promocaoAplicada, promo=ap&&ap.existe&&ap.precoPromocional>0&&ap.precoPromocional<p.preco;
+    const o={i:'d'+String(p._id).slice(-8),f:'D',n:String(p.descricao||'').trim(),p:promo?ap.precoPromocional:p.preco,
+      c:(p.categorias||[]).map(c=>catN[c.$oid||c]||'').filter(Boolean).join('|'),
+      k:cs.map((c,x)=>[String(c.nome).toUpperCase().trim(),corImg[x]?[corImg[x]]:[],c.cor||'']),
+      m:imgs.filter(h=>!corImg.includes(h)),t:ts.map(t=>t.nome).join('~'),e:[...new Set(e)].join(' ')};
+    if(promo)o.po=p.preco; return o;
+  });
+}
+function juntar(a,b){const out=[],n=Math.max(a.length,b.length);for(let i=0;i<n;i++){if(a[i])out.push(a[i]);if(b[i])out.push(b[i])}return out}
 (async()=>{
   fab();
-  try{const s=await (await fetch('snapshot.json',{cache:'no-cache'})).json(); aplicar(s,false); $('#live').textContent='Atualizando estoque…';}catch(e){}
-  try{const v=await aoVivo(); aplicar(v,true);}catch(e){ if(DATA.length)$('#live').textContent=''; else $('#grid').innerHTML='<div class="empty">Não foi possível carregar os produtos agora. Tente de novo em instantes.</div>'; }
+  try{const s=await (await fetch('snapshot.json',{cache:'no-cache'})).json(); window.__snap=s; aplicar(s,false); $('#live').textContent='Atualizando estoque…';}catch(e){}
+  const [rb,dv]=await Promise.allSettled([aoVivo(),aoVivoDV()]);
+  let R=rb.status==='fulfilled'?rb.value:(window.__snap||[]), D=dv.status==='fulfilled'?dv.value:[];
+  const ok=rb.status==='fulfilled'&&dv.status==='fulfilled';
+  if(!aplicar(juntar(R,D),ok)){ if(!DATA.length)$('#grid').innerHTML='<div class="empty">Não foi possível carregar os produtos agora. Tente de novo em instantes.</div>'; }
+  else if(!ok) $('#live').textContent='';
 })();
 </script>
 </body>
