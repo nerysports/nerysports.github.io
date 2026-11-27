@@ -131,7 +131,7 @@ const WA='5575981455157';
 const SRC={A:'https://cdn-op.vesti.co/p/1992701/',B:'https://cdn-op.vesti.mobi/p/1992701/'};
 const API='https://apivesti.vesti.mobi/appmarca/';
 const CO='0aa2446a-dd5e-4372-a801-4247f438c474', CAT='756a08d4d4e9662';
-const preco=p=>p*2+5;
+const preco=p=>{const v=p*2+5;return v===61?59.9:Math.round((v-0.1)*100)/100};
 const brl=v=>'R$ '+v.toFixed(2).replace('.',',');
 const HEX={'PRETO':'#111','BRANCO':'#f4f4f4','OFF':'#ece6d2','CREME':'#e4d2a8','BEGE':'#d8c3a0','BEGE ESCURO':'#a98f6a','CAQUI':'#b39c6d','MARROM':'#6b4523','MOSTARDA':'#c9a227','DOURADO':'#d4af37','LARANJA':'#f07a1f','VERMELHO':'#d32020','VINHO':'#6d1028','UVA':'#5a1f5c','ROXO':'#7b3fb0','LILAS':'#c2a8cf','ROSA':'#e37ab2','ROSA CLARO':'#f5c6d6','ROSA NEON':'#ff2fa8','ROSE':'#c98b80','SALMAO':'#f39b86','AZUL CLARO':'#7fcff0','AZUL TURQUESA':'#16bfe0','AZUL PETROLEO':'#155e6e','ROYAL':'#1e4fd8','MARINHO':'#14234f','VERDE':'#3fa34d','VERDE CLARO':'#a9e3c9','VERDE ESCURO':'#174d22','VERDE NEON':'#7dff3a','VERDE PETROLEO':'#1c4f4a','MILITAR':'#4b5320','CINZA':'#9a9a9a','CINZA CLARO':'#cfcfcf','CHUMBO':'#4a4a4a'};
 const hex=n=>HEX[n]||'#777';
